@@ -2,10 +2,10 @@
 Deployment of a WordPress CMS website on AWS EC2 instance using LAMP Stack (Linux, Apache, MySQL, PHP)
 # AWS WordPress Hosting
 
-## 📚 Project Overview
+##  Project Overview
 This project demonstrates how to deploy and host a WordPress website on an AWS EC2 instance using the LAMP stack (Linux, Apache, MySQL, PHP). The goal is to provide a basic yet powerful setup to manage a WordPress site on a cloud server, showcasing cloud infrastructure and server management skills.
 
-## 🛠 Tech Stack
+##  Tech Stack
 - **AWS EC2**: Cloud computing platform for hosting the server.
 - **Ubuntu 22.04 LTS**: Operating system for the EC2 instance.
 - **Apache**: Web server software for serving HTTP requests.
@@ -13,13 +13,13 @@ This project demonstrates how to deploy and host a WordPress website on an AWS E
 - **PHP**: Server-side scripting language to run WordPress.
 - **WordPress**: Open-source CMS (Content Management System) for building and managing the website.
 
-## 🌍 Features
+##  Features
 - **Easy Deployment**: Setup of LAMP stack on an EC2 instance to run WordPress.
 - **Scalable Architecture**: Ability to scale as traffic grows.
 - **Security**: Basic server hardening and access control.
 - **WordPress**: Fully functional WordPress website with admin panel access.
 
-## 🚀 Deployment Instructions
+##  Deployment Instructions
 
 ### 1. Launch EC2 Instance
 ![Screenshot (75)](https://github.com/user-attachments/assets/4a11a78f-1bdc-4edc-8f39-e11ebb221046)
@@ -49,23 +49,20 @@ This project demonstrates how to deploy and host a WordPress website on an AWS E
 # Update package list
 ![Screenshot (88)](https://github.com/user-attachments/assets/d9d5c4da-d433-4179-a471-15bb25bda461)
 
-sudo apt update
+apt-get update
 
 # Install Apache
-sudo apt install apache2 -y
+
 ![Screenshot (89)](https://github.com/user-attachments/assets/5ba613a7-5042-4998-acb5-76a5ad9fb677)
 
-sudo systemctl start apache2
-sudo systemctl enable apache2
-
+apt-get install apache2 php-curl php-gd php-mbstring php-xml php-xmlrpc mysql-server libapache2-mod-php php-mysql vim
 # Install MySQL
-sudo apt install mysql-server -y
-sudo mysql_secure_installation
-![Screenshot (124)](https://github.com/user-attachments/assets/575e7a71-3fe0-41b0-ba34-7b2a6cb0f5e9)
 
+![Screenshot (124)](https://github.com/user-attachments/assets/575e7a71-3fe0-41b0-ba34-7b2a6cb0f5e9)
+apt-get install apache2 php-curl php-gd php-mbstring php-xml php-xmlrpc mysql-server libapache2-mod-php php-mysql vim
 
 # Install PHP
-sudo apt install php libapache2-mod-php php-mysql -y
+apt-get install apache2 php-curl php-gd php-mbstring php-xml php-xmlrpc mysql-server libapache2-mod-php php-mysql vim
 ![Screenshot (124)](https://github.com/user-attachments/assets/61469471-c543-4a5c-b8a0-3478e316f325)
 
 
@@ -75,27 +72,29 @@ sudo apt install php libapache2-mod-php php-mysql -y
 ![Screenshot (92)](https://github.com/user-attachments/assets/d3e015fd-f568-4011-ac5d-d252f38ab4d8)
 
 
-
+wget -c https://wordpress.org/latest.tar.gz
 tar xzvf latest.tar.gz
 
 # Move files to web directory
+mv wordpress /var/www/html/
 ![Screenshot (97)](https://github.com/user-attachments/assets/51ea729b-4278-47da-899c-afd209219a5a)
 
-sudo cp -R wordpress/* /var/www/html/
 
 # Set permissions
+chown -R www-data:www-data /var/www/html/wordpress
+/etc/init.d/apache2 restart
 ![Screenshot (121)](https://github.com/user-attachments/assets/1bd77c03-f326-45e8-a60b-b77166ece568)
 
-sudo chown -R www-data:www-data /var/www/html/
-sudo chmod -R 755 /var/www/html/
-5. Create MySQL Database and User
-bash
-Copy
-Edit
+
+
 # Log into MySQL
-sudo mysql
+mysql -u root
+
 ![Screenshot (119)](https://github.com/user-attachments/assets/60e7e3ec-672e-48c3-8ab3-0baf88b44bda)
 ![Screenshot (120)](https://github.com/user-attachments/assets/d8ac69d5-b996-40a4-a5ae-9026b00a63b8)
+5. Create MySQL Database and User
+create database wordpress;
+CREATE USER 'aish'@'localhost' IDENTIFIED BY 'wordpress123';   
 
 
 
@@ -110,7 +109,8 @@ CREATE USER 'wpuser'@'localhost' IDENTIFIED BY 'yourpassword';
 
 
 # Grant privileges
-GRANT ALL PRIVILEGES ON wordpress.* TO 'wpuser'@'localhost';
+GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
+FLUSH PRIVILEGES;
 ![Screenshot (122)](https://github.com/user-attachments/assets/5ac01166-9a24-4488-b95f-d08bef1c79a8)
 
 FLUSH PRIVILEGES;
@@ -120,7 +120,7 @@ FLUSH PRIVILEGES;
 
 EXIT;
 6. Complete WordPress Installation
-Visit your EC2 public IP in a web browser: http://your-ec2-public-ip.
+Visit your EC2 public IP in a web browser: http://13.230.220.50/wordpress/wp-admin/index.php.
 ![Screenshot (105)](https://github.com/user-attachments/assets/5d70c2ed-18cc-468b-afa1-e68b1ded87d6)
 
 ![Screenshot (106)](https://github.com/user-attachments/assets/985d725a-fb2a-4f28-9796-ebb5a14f2933)
@@ -129,6 +129,7 @@ Visit your EC2 public IP in a web browser: http://your-ec2-public-ip.
 Follow the on-screen instructions to set up WordPress:
 
 ![Screenshot (107)](https://github.com/user-attachments/assets/0b238ca9-ad95-4dc9-ad3c-edbc23c6921c)
+![Screenshot (110)](https://github.com/user-attachments/assets/5a621d7a-e585-4863-bffc-992c63c071c5)
 
 Enter database name: wordpress
 
@@ -156,3 +157,9 @@ Elastic IP: Allocate and associate an Elastic IP to your EC2 instance to ensure 
 
 
 Firewall: Use security groups and ensure that only required ports (22, 80, 443) are open.
+##  Key Learnings
+
+- **AWS EC2 setup and configuration**: Gained experience in launching and managing EC2 instances.
+- **LAMP stack deployment**: Learned how to install and configure **Apache**, **MySQL**, and **PHP** on Ubuntu.
+- **WordPress configuration**: Developed an understanding of WordPress setup, including configuring wp-config and database connections.
+- **Security setup**: Implemented **firewalls**, **security groups**, and **IP management**.
